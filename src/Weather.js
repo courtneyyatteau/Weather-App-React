@@ -1,15 +1,63 @@
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 
-export default function Weather(props) {
-  function handleResponse(response) {
-    alert(`Weather in ${response.data.name} is ${response.data.main.temp}°F`);
+export default function Weather() {
+  let [city, setCity] = useState("");
+  let [visible, setVisibile] = useState(false);
+  let [weather, setWeather] = useState({});
+
+  function displayWeather(response) {
+    setVisibile(true);
+    setWeather({
+      temperature: response.data.main.temp,
+      wind: response.data.wind.speed,
+      humidity: response.data.main.humidity,
+      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
+      description: response.data.weather[0].description,
+    });
   }
 
-  let apiKey = "eb3465c9163b23fae63aa1202c8a0eb5";
-  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${props.city}&appid=${apiKey}&units=imperial`;
+  function handleSubmit(event) {
+    event.preventDefault();
+    let apiKeyOpen = "eb3465c9163b23fae63aa1202c8a0eb5";
+    axios
+      .get(
+        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyOpen}&units=imperial`
+      )
+      .then(displayWeather);
+  }
 
-  axios.get(apiUrl).then(handleResponse);
+  function updateCity(event) {
+    setCity(event.target.value);
+  }
 
-  return <h2>WEATHER</h2>;
+  let form = (
+    <form onSubmit={handleSubmit}>
+      <input
+        type="search"
+        placeholder="Search for a city..."
+        onChange={updateCity}
+      />
+      <button type="Submit">Search</button>
+    </form>
+  );
+
+  if (visible) {
+    return (
+      <div>
+        {form}
+        <ul>
+          <li>Temperature: {Math.round(weather.temperature)}°F</li>
+          <li>Description: {weather.description}</li>
+          <li>Humidity: {weather.humidity}%</li>
+          <li>Wind: {weather.wind}km/h</li>
+          <li>
+            <img src={weather.icon} alt={weather.description} />
+          </li>
+        </ul>
+      </div>
+    );
+  } else {
+    return form;
+  }
 }
