@@ -1,0 +1,15 @@
+li {
+  list-style: none;
+}
+
+.weather {
+  margin-top: 30px;
+  border: solid gray;
+  width: 50%;
+  padding: 10px;
+}
+
+.name {
+  font-size: 22px;
+  font-weight: 700;
+}

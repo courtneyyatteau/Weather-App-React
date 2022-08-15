@@ -12,7 +12,7 @@ export default function App() {
           href="https://github.com/courtneyyatteau/Weather-App-React"
           target="_blank"
           rel="noreferrer"
-          class="App-link"
+          className="App-link"
         >
           Github project
         </a>{" "}
@@ -21,7 +21,7 @@ export default function App() {
           href="https://courtney-yatteau-portfolio.netlify.app/"
           target="_blank"
           rel="noreferrer"
-          class="App-link"
+          className="App-link"
         >
           Courtney Yatteau
         </a>
