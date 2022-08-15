@@ -13,3 +13,22 @@ li {
   font-size: 22px;
   font-weight: 700;
 }
+
+.date {
+  font-size: 20px;
+  font-weight: 500;
+  color: gray;
+}
+
+.temp {
+  font-size: 32px;
+  font-weight: 600;
+}
+
+.right-side {
+  font-size: 20px;
+}
+
+.active {
+  color: red;
+}

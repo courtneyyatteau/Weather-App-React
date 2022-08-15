@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import axios from "axios";
 import "./Weather.css";
 import FormattedDate from "./FormattedDate";
+import WeatherTemperature from "./WeatherTemperature";
 
 export default function Weather() {
   let [city, setCity] = useState("");
@@ -52,19 +53,25 @@ export default function Weather() {
 
   if (visible) {
     return (
-      <div className="weather">
+      <div className="weather row">
         {form}
-        <ul>
+        <ul className="col-7">
           <li className="name">{weather.location}</li>
           <FormattedDate date={weather.date} />
-          <li>Temperature: {Math.round(weather.temperature)}°F</li>
+          <li className="row">
+            <img
+              className="col-5 img"
+              src={weather.icon}
+              alt={weather.description}
+            />
+            <WeatherTemperature fahrenheit={weather.temperature} />
+          </li>
+        </ul>
+        <ul className="col-5 right-side">
           <li>Real Feel: {Math.round(weather.realFeel)}°F</li>
           <li>Description: {weather.description}</li>
           <li>Humidity: {weather.humidity}%</li>
           <li>Wind: {weather.wind}km/h</li>
-          <li>
-            <img src={weather.icon} alt={weather.description} />
-          </li>
         </ul>
       </div>
     );
