@@ -16,7 +16,6 @@ export default function Weather() {
       location: response.data.name,
       date: new Date(response.data.dt * 1000),
       temperature: response.data.main.temp,
-      realFeel: response.data.main.feels_like,
       wind: response.data.wind.speed,
       humidity: response.data.main.humidity,
       icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
@@ -68,7 +67,6 @@ export default function Weather() {
           </li>
         </ul>
         <ul className="col-5 right-side">
-          <li>Real Feel: {Math.round(weather.realFeel)}°F</li>
           <li>Description: {weather.description}</li>
           <li>Humidity: {weather.humidity}%</li>
           <li>Wind: {weather.wind}km/h</li>
