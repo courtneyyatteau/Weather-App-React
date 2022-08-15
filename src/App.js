@@ -4,16 +4,29 @@ import Weather from "./Weather";
 
 export default function App() {
   return (
-    <div className="App">
+    <div className="App container">
       <Weather />
-      <a
-        href="https://github.com/courtneyyatteau/Weather-App-React"
-        target="_blank"
-        rel="noreferrer"
-        class="App-link"
-      >
-        Github Link
-      </a>
+      <p>
+        This is an open-source{" "}
+        <a
+          href="https://github.com/courtneyyatteau/Weather-App-React"
+          target="_blank"
+          rel="noreferrer"
+          class="App-link"
+        >
+          Github project
+        </a>{" "}
+        created by{" "}
+        <a
+          href="https://courtney-yatteau-portfolio.netlify.app/"
+          target="_blank"
+          rel="noreferrer"
+          class="App-link"
+        >
+          Courtney Yatteau
+        </a>
+        .
+      </p>
     </div>
   );
 }
