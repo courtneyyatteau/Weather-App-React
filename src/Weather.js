@@ -1,34 +1,42 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Weather.css";
-import FormattedDate from "./FormattedDate";
 import WeatherTemperature from "./WeatherTemperature";
+import WeatherForecast from "./WeatherForecast";
 
 export default function Weather() {
   let [city, setCity] = useState("");
   let [visible, setVisibile] = useState(false);
   let [weather, setWeather] = useState({});
 
+  useEffect(() => {
+    setVisibile(false);
+  }, [city]);
+
   function displayWeather(response) {
-    console.log(response);
+    //console.log(response);
     setVisibile(true);
     setWeather({
-      location: response.data.name,
-      date: new Date(response.data.dt * 1000),
-      temperature: response.data.main.temp,
-      wind: response.data.wind.speed,
-      humidity: response.data.main.humidity,
-      icon: `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`,
-      description: response.data.weather[0].description,
+      location: response.data.data[0].city_name,
+      date: response.data.data[0].ob_time.slice(0, 10),
+      time: response.data.data[0].ob_time.slice(11),
+      temperature: response.data.data[0].app_temp,
+      wind: response.data.data[0].wind_spd,
+      precipitation: response.data.data[0].precip,
+      icon: `https://www.weatherbit.io/static/img/icons/${response.data.data[0].weather.icon}.png`,
+      description: response.data.data[0].weather.description,
+      longitude: response.data.data[0].lon,
+      latitude: response.data.data[0].lat,
     });
   }
+  let apiKeyOpen = "a6371c1af3434c54ad422b8869365574";
 
   function handleSubmit(event) {
     event.preventDefault();
-    let apiKeyOpen = "eb3465c9163b23fae63aa1202c8a0eb5";
+
     axios
       .get(
-        `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKeyOpen}&units=imperial`
+        `https://api.weatherbit.io/v2.0/current?city=${city}&key=${apiKeyOpen}&units=I`
       )
       .then(displayWeather);
   }
@@ -38,7 +46,7 @@ export default function Weather() {
   }
 
   let form = (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="weatherForm">
       <input
         type="search"
         placeholder="Search for a city..."
@@ -52,25 +60,33 @@ export default function Weather() {
 
   if (visible) {
     return (
-      <div className="weather row">
-        {form}
-        <ul className="col-7">
-          <li className="name">{weather.location}</li>
-          <FormattedDate date={weather.date} />
-          <li className="row">
-            <img
-              className="col-5 img"
-              src={weather.icon}
-              alt={weather.description}
-            />
-            <WeatherTemperature fahrenheit={weather.temperature} />
-          </li>
-        </ul>
-        <ul className="col-5 right-side">
-          <li>Description: {weather.description}</li>
-          <li>Humidity: {weather.humidity}%</li>
-          <li>Wind: {weather.wind}km/h</li>
-        </ul>
+      <div className="weather">
+        <div className="row">
+          {form}
+          <ul className="col-lg-7">
+            <li className="name">{weather.location}</li>
+            <li>{weather.date}</li>
+            <li>{weather.time}</li>
+            <li className="row">
+              <img
+                className="col-lg-5 img"
+                src={weather.icon}
+                alt={weather.description}
+              />
+              <WeatherTemperature fahrenheit={weather.temperature} />
+            </li>
+          </ul>
+          <ul className="col-lg-5 right-side">
+            <li>Description: {weather.description}</li>
+            <li>Precipitation: {weather.precipitation}%</li>
+            <li>Wind: {weather.wind}km/h</li>
+          </ul>
+        </div>
+        <WeatherForecast
+          apiKey={apiKeyOpen}
+          longitude={weather.longitude}
+          latitude={weather.latitude}
+        />
       </div>
     );
   } else {

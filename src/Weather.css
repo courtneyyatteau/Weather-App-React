@@ -2,10 +2,21 @@ li {
   list-style: none;
 }
 
-.weather {
-  margin-top: 30px;
-  border: solid gray;
+.weather,
+.weatherForm {
+  margin: 0 auto;
+  margin-top: 20px;
+
   width: 50%;
+}
+
+.weatherForm {
+  text-align: center;
+}
+
+.weather {
+  border: solid gray;
+  width: 55%;
   padding: 10px;
 }
 
@@ -27,6 +38,11 @@ li {
 
 .right-side {
   font-size: 20px;
+  padding-top: 15px;
+}
+
+.right-side > li {
+  padding-bottom: 15px;
 }
 
 .active {

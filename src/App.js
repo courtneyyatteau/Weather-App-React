@@ -6,7 +6,7 @@ export default function App() {
   return (
     <div className="App container">
       <Weather />
-      <p>
+      <p className="footer">
         This is an open-source{" "}
         <a
           href="https://github.com/courtneyyatteau/Weather-App-React"

@@ -22,7 +22,7 @@ export default function WeatherTemperature(props) {
   if (unit === "imperial") {
     let fah = Math.round(props.fahrenheit);
     return (
-      <div className="temp col-6">
+      <div className="temp col-lg-6">
         {fah}{" "}
         <a
           href="/"
